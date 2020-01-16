@@ -4,12 +4,6 @@ This project is a virtual bookshelf for Udacity students. Students are able to a
 
 All backend code follows [PEP8 style guidelines](https://www.python.org/dev/peps/pep-0008/). 
 
-## Student Guidelines
-
-Hello students! You'll use this base in various workspaces throughout the course to build the project incrementally as you expand your skills. At each stage, there will be various 'TODO's marked for you to complete. You'll also notice some TODOs in the frontend section. You should referene those sections for formatting your endpoints and responses, and update the frontend to match the endpoints you choose and the programmed behavior. 
-
-You should feel free to expand on the project in any way you can dream up to extend your skills. For instance, you could add additional book information to each entry or create individual book views including more information about the book, your thoughts or when you completed it. 
-
 ## Getting Started
 
 ### Pre-requisites and Local Development 
@@ -23,6 +17,7 @@ To run the application run the following commands:
 ```
 export FLASK_APP=flaskr
 export FLASK_ENV=development
+export APP_CONFIG_FILE=<absolute_path_of_your_local_dir>/config/development.py
 flask run
 ```
 
@@ -46,8 +41,8 @@ In order to run tests navigate to the backend folder and run the following comma
 ```
 dropdb bookshelf_test
 createdb bookshelf_test
-psql bookshelf_test < books.psql
-python test_flaskr.py
+cd backend
+pytest
 ```
 
 The first time you run the tests, omit the dropdb command. 
@@ -61,22 +56,91 @@ All tests are kept in that file and should be maintained as updates are made to 
 - Base URL: At present this app can only be run locally and is not hosted as a base URL. The backend app is hosted at the default, `http://127.0.0.1:5000/`, which is set as a proxy in the frontend configuration. 
 - Authentication: This version of the application does not require authentication or API keys. 
 
-### Error Handling
-- Response codes
-- Messages
-- Error types
-### Endpoints 
-- Organized by resource
-- Include each endpoint
-- Sample request 
-- Arguments including data types
-- Response object including status codes and data types 
+### Error handling
 
-## Deployment N/A
+Errors are returned as JSON objects in the following format:
+```
+{
+    "success": False,
+    "error": 400,
+    "message": "Bad request"
+}
+```
+API will return three error types:
+* 400: Bad Request
+* 404: Resource Not Found
+* 422: Not Processable
+
+### Endpoints
+
+#### GET /books
+
+* General
+   * Returns success value, list of book objects, and total number of books
+   * Results are paginated to groups of 8 - include a page parameter in request to choose (starting from 1)
+* Sample `curl http://127.0.0.1:5000/books`
+```
+{
+  "books": [
+    {
+      "author": "Stephen King",
+      "id": 1,
+      "rating": 5,
+      "title": "The Outsider: A Novel"
+    },
+    {
+      "author": "Lisa Halliday",
+      "id": 2,
+      "rating": 5,
+      "title": "Asymmetry: A Novel"
+    },
+    {
+      "author": "Kristin Hannah",
+      "id": 3,
+      "rating": 5,
+      "title": "The Great Alone"
+    },
+    {
+      "author": "Tara Westover",
+      "id": 4,
+      "rating": 5,
+      "title": "Educated: A Memoir"
+    },
+    {
+      "author": "Leila Slimani",
+      "id": 6,
+      "rating": 5,
+      "title": "Lullaby"
+    },
+    {
+      "author": "Amitava Kumar",
+      "id": 7,
+      "rating": 3,
+      "title": "Immigrant, Montana"
+    },
+    {
+      "author": "Madeline Miller",
+      "id": 8,
+      "rating": 5,
+      "title": "CIRCE"
+    },
+    {
+      "author": "Gina Apostol",
+      "id": 9,
+      "rating": 5,
+      "title": "Insurrecto: A Novel"
+    }
+  ],
+  "success": true,
+  "total_books": 15
+}
+```
+
+## Deployment
+N/A
 
 ## Authors
-Yours truly, Coach Caryn 
+Me
 
 ## Acknowledgements 
 The awesome team at Udacity and all of the students, soon to be full stack extraordinaires! 
-
