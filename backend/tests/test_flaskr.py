@@ -1,14 +1,6 @@
-import json
 import os
-import unittest
-
-from flask_sqlalchemy import SQLAlchemy
 
 from flaskr import create_app
-from flaskr.models import setup_db, Book
-
-with open(os.path.join(os.path.dirname(__file__), 'data.sql'), 'rb') as f:
-    _data_sql = f.read().decode('utf8')
 
 
 def test_config():

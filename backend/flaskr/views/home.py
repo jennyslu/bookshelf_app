@@ -2,7 +2,6 @@ import logging
 
 from flask import Blueprint, abort, jsonify, request
 from sqlalchemy import or_
-from sqlalchemy.sql import func
 
 from ..models import Book
 
